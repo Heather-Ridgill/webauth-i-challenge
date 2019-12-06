@@ -1,4 +1,4 @@
-const db = require (`../database/migrations/dbConfig`);
+const db = require (`../database/dbConfig`);
 
 module.exports = {
     add,
@@ -8,16 +8,16 @@ module.exports = {
 };
 
 function find () {
-    return db (`users`).select (`id`, ` username`);
+    return db (`users`).select (`id`, `username`);
 }
 
-function findBy (filter) {
+function findBy(filter) {
     return db (`users`)
     .select (`id`, `username`, `password`)
     .where(filter);
 }
 
-function add (user) {
+function add(user) {
     return db (`users`)
     .insert (user, `id`)
     .then(ids => {
