@@ -2,17 +2,10 @@ const users = require(`../users/users-model`);
 const bcrypt = require(`bcryptjs`);
 
 module.exports = (req,res,next)=>{
-    const {username, password} = req.headers
-    users.findBy({username})
-    .first()
-    .then(_user=>{
-    if(_user && bcrypt.compareSync(password, _user.password))
-    {
-    next()
+
+    if(req.session && req.session.user){
+        next();
     } else {
-        //invalid creds
-        res.status(401).json({messege:"Invalid Credentials"})
+        res.status(400).json({ message: `No Credentials provided`});
     }
-    })
-    .catch((err)=>{res.status(500).json({messege:err})})
-}
+};
